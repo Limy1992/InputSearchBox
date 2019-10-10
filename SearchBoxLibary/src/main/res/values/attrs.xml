@@ -1,21 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SearchEditBoxStyle">
+    <declare-styleable name="SearchEditBox">
         <attr name="widthBox" format="integer"/>
         <attr name="heightBox" format="integer"/>
         <attr name="backgroundBox" format="reference"/>
         <attr name="clearImageBox" format="reference"/>
-        <attr name="paddingLeftBox" format="integer"/>
-        <attr name="paddingRightBox" format="integer"/>
-        <attr name="paddingTopBox" format="integer"/>
-        <attr name="paddingBottomBox" format="integer"/>
+        <attr name="paddingLeftBox" format="dimension"/>
+        <attr name="paddingRightBox" format="dimension"/>
+        <attr name="paddingTopBox" format="dimension"/>
+        <attr name="paddingBottomBox" format="dimension"/>
         <attr name="textSizeBox" format="float"/>
-        <attr name="textColorBox" format="integer"/>
+        <attr name="textColorBox" format="reference|color"/>
         <attr name="backgroundEditBox" format="reference"/>
         <attr name="textCursorDrawable" format="reference"/>
         <attr name="hintBox" format="string"/>
 
-
+        <attr name="searchImageLeftMargin" format="dimension"/>
+        <attr name="searchImageWidth" format="dimension"/>
+        <attr name="searchImageHeight" format="dimension"/>
+        <attr name="searchImageIcon" format="reference"/>
+        <attr name="searchImageGon" format="boolean"/>
     </declare-styleable>
 
 </resources>

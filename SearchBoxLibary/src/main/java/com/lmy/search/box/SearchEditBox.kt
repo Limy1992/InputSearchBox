@@ -27,6 +27,8 @@ class SearchEditBox(context: Context, attrs: AttributeSet?) :
 
     private var mOnClearInputContent: OnClearInputContent? = null
     private var mOnTextWatcher: OnTextWatcher? = null
+
+    private val searchImage = ImageView(context)
     private val editText = EditText(context)
     private val closeImage = ImageView(context)
     private val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -35,32 +37,47 @@ class SearchEditBox(context: Context, attrs: AttributeSet?) :
         orientation = HORIZONTAL
         initWidget()
 
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SearchEditBoxStyle)
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.SearchEditBox)
         val backgroundBox =
-            typedArray.getResourceId(R.styleable.SearchEditBoxStyle_backgroundBox, R.drawable.bg_search_box)
+            typedArray.getResourceId(R.styleable.SearchEditBox_backgroundBox, R.drawable.bg_search_box)
 
-        val clearImageBox = typedArray.getResourceId(R.styleable.SearchEditBoxStyle_clearImageBox, R.drawable.ic_s_c)
+        val clearImageBox = typedArray.getResourceId(R.styleable.SearchEditBox_clearImageBox, R.drawable.ic_s_c)
 
-        val widthBox = typedArray.getInt(R.styleable.SearchEditBoxStyle_widthBox, ViewGroup.LayoutParams.MATCH_PARENT)
+        val widthBox = typedArray.getInt(R.styleable.SearchEditBox_widthBox, ViewGroup.LayoutParams.MATCH_PARENT)
 
-        val heightBox = typedArray.getInt(R.styleable.SearchEditBoxStyle_heightBox, dip2px(30f))
+        val heightBox = typedArray.getInt(R.styleable.SearchEditBox_heightBox, dip2px(30f))
 
-        val paddingLeft = typedArray.getInt(R.styleable.SearchEditBoxStyle_paddingLeftBox, dip2px(10f))
-        val paddingRight = typedArray.getInt(R.styleable.SearchEditBoxStyle_paddingRightBox, 0)
-        val paddingTop = typedArray.getInt(R.styleable.SearchEditBoxStyle_paddingTopBox, 0)
-        val paddingBottom = typedArray.getInt(R.styleable.SearchEditBoxStyle_paddingBottomBox, 0)
+        val paddingLeft = typedArray.getLayoutDimension(R.styleable.SearchEditBox_paddingLeftBox, dip2px(10f))
+        val paddingRight = typedArray.getLayoutDimension(R.styleable.SearchEditBox_paddingRightBox, 0)
+        val paddingTop = typedArray.getLayoutDimension(R.styleable.SearchEditBox_paddingTopBox, 0)
+        val paddingBottom = typedArray.getLayoutDimension(R.styleable.SearchEditBox_paddingBottomBox, 0)
 
-        val textColorBox = typedArray.getInt(R.styleable.SearchEditBoxStyle_textColorBox, Color.parseColor("#333333"))
+        val textColorBox = typedArray.getColor(R.styleable.SearchEditBox_textColorBox, Color.parseColor("#333333"))
 
-        val textSizeBox = typedArray.getFloat(R.styleable.SearchEditBoxStyle_textSizeBox, 14f)
+        val textSizeBox = typedArray.getFloat(R.styleable.SearchEditBox_textSizeBox, 14f)
 
-        val backgroundEditBox = typedArray.getResourceId(R.styleable.SearchEditBoxStyle_backgroundEditBox, 0)
+        val backgroundEditBox = typedArray.getResourceId(R.styleable.SearchEditBox_backgroundEditBox, 0)
 
-        val hintBox = typedArray.getString(R.styleable.SearchEditBoxStyle_hintBox) ?: ""
+        val hintBox = typedArray.getString(R.styleable.SearchEditBox_hintBox) ?: ""
 
-        val tetCursorDrawable = typedArray.getResourceId(R.styleable.SearchEditBoxStyle_textCursorDrawable, -1)
+        val tetCursorDrawable = typedArray.getResourceId(R.styleable.SearchEditBox_textCursorDrawable, -1)
+
+        val searchImageLeftMargin =
+            typedArray.getInt(R.styleable.SearchEditBox_searchImageLeftMargin, dip2px(11f))
+        val searchImageWidth =  typedArray.getLayoutDimension(R.styleable.SearchEditBox_searchImageWidth,ViewGroup.LayoutParams.WRAP_CONTENT)
+        val searchImageHeight =  typedArray.getLayoutDimension(R.styleable.SearchEditBox_searchImageHeight,ViewGroup.LayoutParams.WRAP_CONTENT)
+        val searchImageIcon =  typedArray.getResourceId(R.styleable.SearchEditBox_searchImageIcon,R.drawable.ic_m_search)
+        val searchImageGon =  typedArray.getBoolean(R.styleable.SearchEditBox_searchImageGon,false)
 
         setBackgroundResource(backgroundBox)
+
+        if (!searchImageGon) {
+            val searchImagePar = LayoutParams(searchImageWidth, searchImageHeight)
+            searchImagePar.gravity = Gravity.CENTER_VERTICAL
+            searchImagePar.leftMargin = searchImageLeftMargin
+            searchImage.setImageResource(searchImageIcon)
+            addView(searchImage, searchImagePar)
+        }
 
         editText.setSingleLine(true)
         editText.ellipsize = TextUtils.TruncateAt.END
@@ -68,7 +85,7 @@ class SearchEditBox(context: Context, attrs: AttributeSet?) :
         val edParams = LayoutParams(widthBox, heightBox)
         edParams.weight = 1f
         edParams.gravity = Gravity.CENTER_VERTICAL
-        editText.setPadding(paddingLeft, paddingTop, paddingRight, paddingBottom)
+        editText.setPadding(paddingLeft.toInt(), paddingTop.toInt(), paddingRight.toInt(), paddingBottom.toInt())
         editText.setTextColor(textColorBox)
         editText.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSizeBox)
         editText.setBackgroundResource(backgroundEditBox)
@@ -81,7 +98,6 @@ class SearchEditBox(context: Context, attrs: AttributeSet?) :
                 e.printStackTrace()
             }
         }
-
 
         val params = LayoutParams(dip2px(20f), dip2px(20f))
         params.gravity = Gravity.CENTER_VERTICAL
