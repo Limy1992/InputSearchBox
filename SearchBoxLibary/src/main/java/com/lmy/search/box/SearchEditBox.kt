@@ -175,6 +175,14 @@ class SearchEditBox(context: Context, attrs: AttributeSet?) :
         inputMethodManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+    fun setEnableEdit(able:Boolean){
+        editText.isFocusable = able
+        editText.isFocusableInTouchMode = able
+        if (able) {
+            setRequestFocus()
+        }
+    }
+
     fun setHint(hintText: String) {
         editText.hint = hintText
     }
