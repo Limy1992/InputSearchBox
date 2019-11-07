@@ -99,7 +99,7 @@ class SearchEditBox(context: Context, attrs: AttributeSet?) :
             }
         }
 
-        val params = LayoutParams(dip2px(20f), dip2px(20f))
+        val params = LayoutParams(dip2px(13f), dip2px(13f))
         params.gravity = Gravity.CENTER_VERTICAL
         params.rightMargin = dip2px(10f)
         closeImage.setImageResource(clearImageBox)
@@ -196,4 +196,16 @@ class SearchEditBox(context: Context, attrs: AttributeSet?) :
         return (dpValue * scale + 0.5f).toInt()
     }
 
+    fun getCloseImage():ImageView{
+        return closeImage
+    }
+
+
+    fun getSearchImage():ImageView{
+        return searchImage
+    }
+
+    fun getEditText():EditText{
+        return editText
+    }
 }
